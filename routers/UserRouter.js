@@ -5,7 +5,10 @@ const router = express.Router()
 
 router.route("/")
 .get(getUser)
-.post(createUser)
+.post(createUser) 
+
+router.get("/phoneCodes", phoneCodes)
+
 
 // router.route("/phoneCodes")
 // .get(phoneCodes)

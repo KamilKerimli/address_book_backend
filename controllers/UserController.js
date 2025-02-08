@@ -1,6 +1,10 @@
 import userItem from "../models/UserModel.js"
 import fs  from "fs";
 import  path  from "path";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 //get
 /* const getUsers = async (req, res) => {
@@ -33,18 +37,21 @@ const getUser = async (req, res) => {
     }
 };
  
-
 const phoneCodes = async (req, res) => {
-    const filePath = path.join(__dirname, '../datas/phoneCode.json');
+    try {
+        const filePath = path.join(__dirname, '../datas/phoneCode.json');
 
-    fs.readFile(filePath, 'utf8', (err, data) => {
-        if (err) {
-            return res.status(500).json({ message: 'Server error', error: err.message });
-        }
-        res.json(JSON.parse(data));
-    });
+        fs.readFile(filePath, 'utf8', (err, data) => {
+            if (err) {
+                return res.status(500).json({ message: 'Server error', error: err.message });
+            }
+            res.status(200).json(JSON.parse(data));
+        });
+    } catch (err) {
+        res.status(404).json({ message: "Server error: " || err.message })
+    }
+    
 }
-
 
 const createUser = async (req, res) => {
     try {
@@ -96,7 +103,7 @@ const createUser = async (req, res) => {
 
 
 //delete
-/* const deleteUser = async (req,res) => {
+const deleteUser = async (req,res) => {
     
     try {
         const {id} = req.params
@@ -106,7 +113,7 @@ const createUser = async (req, res) => {
         console.log("user not exist");
         
     }
-} */
+}
 
 
 export { phoneCodes, createUser, getUser }
